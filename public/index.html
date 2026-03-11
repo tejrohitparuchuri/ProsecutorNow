@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Judicial Case Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+
+    <button id="floating-toggle" onclick="toggleSidebar()" class="floating-btn hidden" title="Open Sidebar"
+        style="padding: 0; outline: none;">
+        <div class="hamburger-icon">
+            <span class="line line-top"></span>
+            <span class="line line-middle"></span>
+            <span class="line line-bottom"></span>
+        </div>
+    </button>
+
+    <div class="app-layout" style="display: flex; width: 100vw; height: 100vh; overflow: hidden;">
+
+        <!-- Sidebar Menu -->
+        <div id="sidebar" class="glass-container sidebar"
+            style="width: 280px; border-radius: 0; border-top: none; border-left: none; border-bottom: none; display: flex; flex-direction: column; overflow-y: hidden; z-index: 10; padding: 30px 20px; transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 id="sidebar-title" style="margin: 0; font-size: 1.8rem; color: var(--text-color);">eCourts</h2>
+                <button onclick="toggleSidebar()"
+                    style="background: transparent; border: none; cursor: pointer; padding: 0; outline: none;"
+                    title="Minimize Sidebar">
+                    <div class="hamburger-icon">
+                        <span class="line line-top"></span>
+                        <span class="line line-middle"></span>
+                        <span class="line line-bottom"></span>
+                    </div>
+                </button>
+            </div>
+
+            <div id="user-controls" class="sidebar-menu" style="display: flex; flex-direction: column;">
+                <p class="menu-label">Public Services</p>
+                <button class="menu-item" onclick="window.location.href='rights.html'">Know Your Rights</button>
+                <button class="menu-item" onclick="showSection('public-tracker-section')">Track Public Status</button>
+
+                <p class="menu-label">Account</p>
+                <button class="menu-item" onclick="showModal('login-modal')">Login</button>
+                <button class="menu-item" onclick="showModal('register-modal')">Register</button>
+            </div>
+
+            <div id="logged-in-controls" class="sidebar-menu hidden"
+                style="display: flex; flex-direction: column; height: 100%;">
+                <div
+                    style="text-align: left; margin-bottom: 10px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
+                    <span id="welcome-msg" class="welcome-text"
+                        style="display: block; margin: 0; color: #a3a3a3; font-size: 0.9rem;"></span>
+                </div>
+
+                <p class="menu-label">Services</p>
+                <button class="menu-item" onclick="window.location.href='rights.html'">Know Your Rights</button>
+                <button class="menu-item" onclick="showSection('public-tracker-section')">Track Public Status</button>
+                <button class="menu-item" onclick="showSection('secure-descriptions-section')">Secure
+                    Descriptions</button>
+                <button class="menu-item" onclick="showSection('my-cases-section')">My Filed Cases</button>
+
+                <p class="menu-label">Actions</p>
+                <button id="btn-admin" class="menu-item hidden" onclick="window.location.href='admin.html'">Admin
+                    Dashboard</button>
+                <button id="btn-prosecutor" class="menu-item" onclick="window.location.href='prosecutors.html'">Recruit
+                    Prosecutor</button>
+                <button id="btn-file-case" class="menu-item" onclick="window.location.href='file-case.html'">File New
+                    Case</button>
+
+                <div style="margin-top: auto; padding-top: 20px;">
+                    <button class="menu-item danger" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content-area"
+            style="flex: 1; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+
+            <!-- Default Welcome Section -->
+            <div id="default-section" class="content-section" style="text-align: center; max-width: 800px;">
+                <h1
+                    style="font-size: 3rem; font-weight: 700; color: var(--primary-color); margin-bottom: 20px; line-height: 1.2;">
+                    Judicial Search Portal</h1>
+                <p style="font-size: 1.1rem; color: #475569; line-height: 1.6; margin-bottom: 40px;">Securely file new
+                    cases, check instant progress tracking, and manage your judicial records all in one unified portal.
+                </p>
+                <div class="glass-container"
+                    style="display: inline-block; padding: 20px 40px; border-radius: 50px; background: rgba(0, 0, 0, 0.05);">
+                    <p style="margin: 0; font-size: 1.05rem; color: #64748b;">Please select a service from the left
+                        menu to begin</p>
+                </div>
+            </div>
+
+            <!-- Public Tracker Section -->
+            <div id="public-tracker-section" class="content-section glass-container hidden"
+                style="width: 100%; max-width: 600px;">
+                <h2 style="margin-top: 0; margin-bottom: 10px; color: var(--primary-color);">Public Phase Tracker
+                </h2>
+                <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 25px;">Enter a Progress ID to check the
+                    current phase of a case. Descriptions remain hidden for privacy.</p>
+                <div class="search-box">
+                    <input type="text" id="progress-id-input" placeholder="Enter Progress ID (e.g. PG-XXX)">
+                    <button class="btn btn-primary search-btn" onclick="checkCaseStatus()">Track</button>
+                </div>
+                <div id="status-result" class="result-box hidden" style="margin-top: 20px; text-align: left;"></div>
+            </div>
+
+            <!-- Secure Descriptions Section -->
+            <div id="secure-descriptions-section" class="content-section glass-container hidden"
+                style="width: 100%; max-width: 700px;">
+                <h2 style="margin-top: 0; color: var(--primary-color);">Secure Case Descriptions</h2>
+                <p class="subtitle" style="margin-bottom: 25px;">As an authorized party, you can view your case
+                    description details securely.</p>
+                <div class="search-box">
+                    <input type="text" id="secure-progress-id-input" placeholder="Your Case Progress ID">
+                    <button class="btn btn-success search-btn" onclick="checkCaseDetails()">View Full Details</button>
+                </div>
+                <div id="details-result" class="result-box hidden" style="margin-top: 20px;"></div>
+            </div>
+
+            <!-- My Cases Section -->
+            <div id="my-cases-section" class="content-section glass-container hidden"
+                style="width: 100%; max-width: 800px; max-height: 80vh; overflow-y: auto;">
+                <h2 style="margin-top: 0; color: var(--primary-color);">My Filed Cases</h2>
+                <p class="subtitle" style="margin-bottom: 25px;">A complete log of cases filed under your account.</p>
+                <div id="my-cases-list"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content glass-container glass-modal">
+            <span class="close" onclick="hideModal('login-modal')">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label for="login-userid">User ID</label>
+                    <input type="text" id="login-userid" required placeholder="e.g., user1">
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required placeholder="e.g., 123">
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Login</button>
+            </form>
+            <p class="demo-note">Demo Accounts Pre-Signed in DB: user1, user2... user15 (Password: 123)</p>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal hidden">
+        <div class="modal-content glass-container glass-modal">
+            <span class="close" onclick="hideModal('register-modal')">&times;</span>
+            <h2>Create Account</h2>
+            <form id="register-form" onsubmit="handleRegister(event)">
+                <div class="input-group">
+                    <label for="reg-userid">User ID</label>
+                    <input type="text" id="reg-userid" required placeholder="Choose a unique ID">
+                </div>
+                <div class="input-group">
+                    <label for="reg-aadhar">Aadhar Number</label>
+                    <input type="text" id="reg-aadhar" required pattern="\d{12}" title="Must be exactly 12 digits"
+                        placeholder="12-digit Aadhar (e.g., 123456789012)">
+                </div>
+                <div class="input-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" required placeholder="Secure Password">
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

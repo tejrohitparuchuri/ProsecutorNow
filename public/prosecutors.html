@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruit Prosecutor - eCourts</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .recruitment-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .prosecutor-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .prosecutor-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        .prosecutor-info h3 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+        }
+
+        .prosecutor-info p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .specialty-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: #93acff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .hire-section {
+            margin-bottom: 30px;
+        }
+
+        .hire-section label {
+            display: block;
+            margin-bottom: 8px;
+            color: #475569;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <div class="glass-container header">
+        <h1>⚖️ eCourts - Legal Representation</h1>
+        <div class="user-controls">
+            <button class="btn btn-outline" onclick="window.location.href='index.html'">Back Home</button>
+        </div>
+    </div>
+
+    <div class="glass-container main-content">
+        <h2>Prosecutor Recruitment Desk</h2>
+        <p class="subtitle">Select one of your filed cases and assign a specialized legal professional.</p>
+
+        <div class="hire-section result-box" style="background: rgba(0,0,0,0.2);">
+            <label for="user-cases-select"><strong>1. Select Your Case:</strong></label>
+            <select id="user-cases-select" class="custom-select" style="margin-bottom: 10px;">
+                <option value="">Loading your cases...</option>
+            </select>
+        </div>
+
+        <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--text-color);">2. Choose an Available Prosecutor
+        </h3>
+        <div id="prosecutors-list" class="recruitment-container">
+            <p>Loading available prosecutors...</p>
+        </div>
+
+        <div id="hire-result" class="result-box hidden" style="margin-top: 25px;"></div>
+    </div>
+
+    <script>
+        let currentUser = localStorage.getItem('currentUser');
+        let userCasesData = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!currentUser) {
+                alert("You must be logged in to recruit a prosecutor.");
+                window.location.href = 'index.html';
+                return;
+            }
+            loadUserCasesAndProsecutors();
+        });
+
+        async function loadUserCasesAndProsecutors() {
+            try {
+                // Fetch cases
+                const caseRes = await fetch(`/api/my-cases/${currentUser}`);
+                const caseData = await caseRes.json();
+
+                const selectElement = document.getElementById('user-cases-select');
+                if (caseData.success) {
+                    userCasesData = caseData.cases;
+                    if (userCasesData.length === 0) {
+                        selectElement.innerHTML = '<option value="">No filed cases found. File a case first.</option>';
+                        selectElement.disabled = true;
+                    } else {
+                        selectElement.innerHTML = '<option value="" disabled selected>-- Select a Case --</option>';
+                        userCasesData.forEach(c => {
+                            const option = document.createElement('option');
+                            option.value = c.case_id;
+                            option.innerText = `Case ID: ${c.case_id} (${c.category || 'Other'}) - ${c.status}`;
+                            selectElement.appendChild(option);
+                        });
+                    }
+                }
+
+                // Fetch prosecutors
+                const prosRes = await fetch('/api/prosecutors');
+                const prosData = await prosRes.json();
+
+                const prosList = document.getElementById('prosecutors-list');
+                if (prosData.success) {
+                    prosList.innerHTML = '';
+                    prosData.prosecutors.forEach(p => {
+                        prosList.innerHTML += `
+                            <div class="prosecutor-card">
+                                <div class="prosecutor-info">
+                                    <h3>${p.name}</h3>
+                                    <p>Experience: <strong>${p.experience}</strong></p>
+                                    <span class="specialty-badge">${p.specialty}</span>
+                                </div>
+                                <button class="btn btn-primary" onclick="recruitProsecutor('${p.id}')">Recruit for Case</button>
+                            </div>
+                        `;
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Error connecting to server.");
+            }
+        }
+
+        async function recruitProsecutor(prosecutorId) {
+            const selectElement = document.getElementById('user-cases-select');
+            const caseId = selectElement.value;
+
+            if (!caseId) {
+                alert("Please select a case from the dropdown first before recruiting.");
+                return;
+            }
+
+            // Confirm
+            const proceed = confirm(`Are you sure you want to recruit this prosecutor for Case ID ${caseId}?`);
+            if (!proceed) return;
+
+            try {
+                const response = await fetch('/api/assign-prosecutor', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        case_id: caseId,
+                        prosecutor_id: prosecutorId,
+                        userid: currentUser
+                    })
+                });
+
+                const data = await response.json();
+                const resultBox = document.getElementById('hire-result');
+                resultBox.classList.remove('hidden');
+
+                if (data.success) {
+                    resultBox.className = 'result-box';
+                    resultBox.innerHTML = `✅ Successfully assigned the prosecutor to Case ID <span style="color:var(--primary-color);">${caseId}</span>. They will contact you shortly.`;
+                } else {
+                    resultBox.className = 'result-box error';
+                    resultBox.innerHTML = `❌ Failed to recruit: ${data.message}`;
+                }
+            } catch (e) {
+                alert("Network error.");
+            }
+        }
+    </script>
+</body>
+
+</html>

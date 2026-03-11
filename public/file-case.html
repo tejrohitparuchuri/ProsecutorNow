@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File a New Case - eCourts</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <div class="glass-container header">
+        <h1>eCourts - File New Case</h1>
+        <div class="user-controls">
+            <button class="btn btn-outline" onclick="window.location.href='index.html'">Back to Dashboard</button>
+        </div>
+    </div>
+
+    <div class="glass-container main-content">
+        <h2>Submit a New Case</h2>
+        <p class="subtitle">Please fill out the details carefully. Once submitted, you will receive a unique Progress
+            ID.</p>
+
+        <form id="file-case-form" onsubmit="submitNewCase(event)">
+            <div class="input-group">
+                <label for="fc-category">Case Category</label>
+                <select id="fc-category" required class="custom-select">
+                    <option value="" disabled selected>Select a category...</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Missing Person">Missing Person</option>
+                    <option value="Accident">Accident</option>
+                    <option value="Civil Dispute">Civil Dispute</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="fc-victim">Victim Name</label>
+                <input type="text" id="fc-victim" required placeholder="Full Name">
+            </div>
+
+            <div class="input-group">
+                <label for="fc-phone">Contact Phone Number</label>
+                <input type="text" id="fc-phone" required placeholder="e.g. 9876543210" pattern="[0-9]{10,15}">
+            </div>
+
+            <div class="input-group">
+                <label for="fc-relation">Relationship to Victim</label>
+                <input type="text" id="fc-relation" required placeholder="e.g. Self, Brother, Friend">
+            </div>
+
+            <div class="input-group">
+                <label for="fc-desc">Description of Incident</label>
+                <textarea id="fc-desc" required placeholder="Provide details about the incident..." rows="5"
+                    class="custom-textarea"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary full-width" id="submit-case-btn">Generate Case ID &
+                Submit</button>
+        </form>
+
+        <div id="new-case-result" class="result-box hidden" style="margin-top: 20px;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

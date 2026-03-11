@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Judicial System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-controls select {
+            flex-grow: 1;
+            min-width: 150px;
+        }
+
+        .case-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .bg-Beginning {
+            background: rgba(99, 102, 241, 0.2);
+            color: #93acff;
+        }
+
+        .bg-Hearing {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .bg-Closed {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .update-bar {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <div class="glass-container header">
+        <h1>eCourts - Department Dashboard</h1>
+        <div class="user-controls">
+            <button class="btn btn-outline" onclick="window.location.href='index.html'">Back Home</button>
+        </div>
+    </div>
+
+    <div class="glass-container main-content">
+        <h2>All Active System Cases</h2>
+        <p class="subtitle">Overview and manage progress of tracking records.</p>
+
+        <div class="admin-controls">
+            <select id="sort-category" class="custom-select" onchange="renderCases()">
+                <option value="all">All Categories</option>
+                <option value="Crime">Crime</option>
+                <option value="Missing Person">Missing Person</option>
+                <option value="Accident">Accident</option>
+                <option value="Civil Dispute">Civil Dispute</option>
+                <option value="Other">Other</option>
+            </select>
+            <select id="sort-date" class="custom-select" onchange="renderCases()">
+                <option value="asc">Date: Oldest First</option>
+                <option value="desc">Date: Newest First</option>
+            </select>
+            <button class="btn btn-primary" onclick="loadAllCases()">Refresh List</button>
+        </div>
+
+        <div id="admin-cases-container">
+            <p>Loading cases...</p>
+        </div>
+    </div>
+
+    <script>
+        let allCases = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('isAdmin') !== 'true') {
+                alert("Unauthorized Access. Department ID required.");
+                window.location.href = 'index.html';
+                return;
+            }
+            loadAllCases();
+        });
+
+        async function loadAllCases() {
+            const container = document.getElementById('admin-cases-container');
+            container.innerHTML = '<p>Loading cases...</p>';
+            try {
+                const res = await fetch('/api/all-cases');
+                const data = await res.json();
+                if (data.success) {
+                    allCases = data.cases;
+                    renderCases();
+                } else {
+                    container.innerHTML = `<div class="result-box error">Failed to load cases.</div>`;
+                }
+            } catch (err) {
+                container.innerHTML = `<div class="result-box error">Server connection error.</div>`;
+            }
+        }
+
+        function renderCases() {
+            const container = document.getElementById('admin-cases-container');
+            const catFilter = document.getElementById('sort-category').value;
+            const dateSort = document.getElementById('sort-date').value;
+
+            // Filter
+            let filtered = allCases;
+            if (catFilter !== 'all') {
+                filtered = allCases.filter(c => c.category === catFilter);
+            }
+
+            // Sort by Date
+            filtered.sort((a, b) => {
+                const d1 = new Date(a.date_filed || 0);
+                const d2 = new Date(b.date_filed || 0);
+                return dateSort === 'asc' ? d1 - d2 : d2 - d1;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="result-box">No cases found matching criteria.</div>';
+                return;
+            }
+
+            let htmlString = '';
+            filtered.forEach(c => {
+                const formattedDate = c.date_filed ? new Date(c.date_filed).toLocaleString() : 'N/A';
+                htmlString += `
+                    <div class="case-card">
+                        <div class="case-header">
+                            <div>
+                                <h3 style="margin:0 0 5px 0; color: var(--primary-color);">Case ID: ${c.case_id}</h3>
+                                <small style="color: #475569;">Progress ID: <strong>${c.progress_id}</strong> | Category: <strong>${c.category || 'N/A'}</strong></small><br>
+                                <small style="color: #475569;">Filed On: ${formattedDate} | Owner: ${c.owner_userid}</small>
+                            </div>
+                            <span class="status-badge bg-${c.status}">${c.status}</span>
+                        </div>
+                        <div style="color: var(--text-color); font-size: 0.95rem; margin-bottom: 10px;">
+                            ${c.description.replace(/\n/g, '<br>')}
+                        </div>
+                        <div class="update-bar">
+                            <select id="status-select-${c.case_id}" class="custom-select" style="max-width:150px; padding: 10px;">
+                                <option value="Beginning" ${c.status === 'Beginning' ? 'selected' : ''}>Beginning</option>
+                                <option value="Hearing" ${c.status === 'Hearing' ? 'selected' : ''}>Hearing</option>
+                                <option value="Closed" ${c.status === 'Closed' ? 'selected' : ''}>Closed</option>
+                            </select>
+                            <input type="date" id="date-select-${c.case_id}" class="custom-select" style="max-width:150px; padding: 10px;" value="${c.next_hearing_date || ''}" title="Next Hearing Date">
+                            <button class="btn btn-success" style="padding: 10px;" onclick="updateScale('${c.case_id}')">Update Status</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = htmlString;
+        }
+
+        async function updateScale(caseId) {
+            const newStatus = document.getElementById(`status-select-${caseId}`).value;
+            const newDate = document.getElementById(`date-select-${caseId}`).value;
+            try {
+                const res = await fetch('/api/update-case-status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ case_id: caseId, status: newStatus, next_hearing_date: newDate })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Status officially updated!');
+                    // Update locally safely
+                    const c = allCases.find(x => x.case_id === caseId);
+                    if (c) {
+                        c.status = newStatus;
+                        c.next_hearing_date = newDate;
+                    }
+                    renderCases();
+                } else {
+                    alert('Update failed: ' + data.message);
+                }
+            } catch (e) {
+                alert('Connection error');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Your Rights - eCourts</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .rights-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .rights-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .rights-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rights-card p {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .limitations {
+            background: rgba(239, 68, 68, 0.1);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .limitations h4 {
+            margin-top: 0;
+            color: #ef4444;
+            margin-bottom: 8px;
+        }
+
+        .limitations ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-color);
+        }
+
+        .limitations li {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <div class="glass-container header">
+        <h1>eCourts - Human Rights Guide</h1>
+        <div class="user-controls">
+            <button class="btn btn-outline" onclick="window.location.href='index.html'">Back Home</button>
+        </div>
+    </div>
+
+    <div class="glass-container main-content">
+        <h2>Know Your Rights & Legal Extents</h2>
+        <p class="subtitle">A comprehensive guide on what you are legally entitled to, and exactly where the boundaries
+            of law restrict public reactions.</p>
+
+        <div class="rights-container">
+
+            <!-- Self Defense -->
+            <div class="rights-card">
+                <h3>Right to Private Defense (Self Defense)</h3>
+                <p><strong>The Core Right:</strong> Every individual has the right to defend their own body and
+                    property, as well as the body and property of others, against crimes like theft, robbery, mischief,
+                    or criminal trespass.</p>
+                <div class="limitations">
+                    <h4>The Limits (Where you must stop)</h4>
+                    <ul>
+                        <li><strong>Proportionality:</strong> The force used must ONLY be enough to stop the threat. If
+                            an attacker punches you, you cannot legally respond by using a lethal weapon.</li>
+                        <li><strong>Time of Retaliation:</strong> You can only act while the danger is active. If the
+                            attacker runs away, chasing and striking them is treated as assault/revenge, not
+                            self-defense.</li>
+                        <li><strong>Public Authorities:</strong> There is no right of private defense against an act
+                            done by a public servant (like police) acting in good faith under color of their office,
+                            unless it causes apprehension of death.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Freedom of Speech -->
+            <div class="rights-card">
+                <h3>Freedom of Speech and Expression</h3>
+                <p><strong>The Core Right:</strong> You have the fundamental right to express your views, opinions, and
+                    beliefs freely by words, writing, printing, picture, or in any other manner in public forums.</p>
+                <div class="limitations">
+                    <h4>The Limits (Where you must stop)</h4>
+                    <ul>
+                        <li><strong>Hate Speech:</strong> You cannot incite violence, promote enmity between different
+                            groups on grounds of religion, race, place of birth, or language.</li>
+                        <li><strong>Defamation:</strong> You cannot falsely damage another person's or organization's
+                            reputation.</li>
+                        <li><strong>Public Order & Decency:</strong> Speech cannot create public riots, panic, or be
+                            obscene in nature.</li>
+                        <li><strong>Contempt of Court:</strong> You cannot publish materials that lower the authority of
+                            the judicial system or interfere with judicial proceedings.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Assembly and Protest -->
+            <div class="rights-card">
+                <h3>Right to Assemble and Protest</h3>
+                <p><strong>The Core Right:</strong> Citizens have the right to assemble peacefully and without arms to
+                    protest against government policies or raise public awareness.</p>
+                <div class="limitations">
+                    <h4>The Limits (Where you must stop)</h4>
+                    <ul>
+                        <li><strong>No Arms:</strong> The assembly must absolutely not involve any weapons.</li>
+                        <li><strong>Section 144 / Section 163 BNSS:</strong> If the local magistrate imposes prohibitory
+                            orders due to emergency or danger to public tranquility, the assembly becomes an "Unlawful
+                            Assembly" and must disperse.</li>
+                        <li><strong>Traffic Intersection:</strong> Protests cannot entirely block public roads or
+                            fundamentally restrict the movement of other citizens indefinitely.</li>
+                        <li><strong>Public Property:</strong> The moment protestors damage public property or commit
+                            violence, they lose this legal protection.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Arrest Rights -->
+            <div class="rights-card">
+                <h3>Rights During Arrest & Detention</h3>
+                <p><strong>The Core Right:</strong> No person can be detained or arrested arbitrarily. You are
+                    guaranteed specific protections when interacting with law enforcement.</p>
+                <div class="limitations">
+                    <h4>The Limits & Procedures</h4>
+                    <ul>
+                        <li><strong>Right to be Informed:</strong> You MUST be informed of the grounds of your arrest
+                            immediately.</li>
+                        <li><strong>24-Hour Rule:</strong> You cannot be held in police custody for more than 24 hours
+                            without being presented before a Magistrate.</li>
+                        <li><strong>Right to a Lawyer:</strong> You have the right to consult and be defended by a legal
+                            practitioner of your choice.</li>
+                        <li><strong>Resisting Arrest:</strong> While you have rights, actively physically resisting a
+                            lawful arrest by an officer is a separate crime. You must comply and fight the legality in
+                            court.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
