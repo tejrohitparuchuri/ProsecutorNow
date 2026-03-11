@@ -6,9 +6,9 @@
   </p>
 
   <p>
-    <a href="#mission-aspect-1"><img src="https://img.shields.io/badge/Mission-Public_Support-blue?style=for-the-badge&logo=compass" alt="Mission"></a>
-    <a href="#mission-aspect-2"><img src="https://img.shields.io/badge/Mission-Lawyer_Growth-success?style=for-the-badge&logo=rocket" alt="Lawyer Growth"></a>
-    <a href="#design-philosophy"><img src="https://img.shields.io/badge/Design-Prosecutor_Livery-orange?style=for-the-badge&logo=structure" alt="Design"></a>
+    <a href="#mission-aspect-1"><img src="https://img.shields.io/badge/Mission-Public_Support-red?style=for-the-badge&logo=compass" alt="Mission"></a>
+    <a href="#mission-aspect-2"><img src="https://img.shields.io/badge/Mission-Lawyer_Growth-red?style=for-the-badge&logo=rocket" alt="Lawyer Growth"></a>
+    <a href="#design-philosophy"><img src="https://img.shields.io/badge/Design-Prosecutor_Livery-red?style=for-the-badge&logo=structure" alt="Design"></a>
   </p>
 </div>
 
@@ -20,7 +20,7 @@ Our platform acts as a critical resource ensuring justice and professional growt
 
 <details open>
 <summary id="mission-aspect-1"><b>🛡️ Aspect 1: Public Support & Empowerment</b></summary>
-<br/>U
+<br/>
 
 A substantial number of individuals throughout India frequently find themselves entangled in situations involving false allegations. This circumstance can be deeply distressing, leaving them feeling overwhelmed, uncertain, and without a clear understanding of the necessary actions to take—particularly concerning the process of obtaining appropriate legal guidance and representation. 
 
@@ -60,7 +60,7 @@ This specifically designed platform functions as a critical resource, offering a
 
 ---
 
-> **Note**: To completely use the project, please download `runsql` from [here](https://drive.google.com/file/d/1y3IY9xMsPhCElpiNhHkz0TBWPZmnwzvt/view).
+> **Note**: To completely use the project, please download `runsql` from <a href="https://drive.google.com/file/d/1y3IY9xMsPhCElpiNhHkz0TBWPZmnwzvt/view" style="color: red; text-decoration: underline;">here</a>.
 
 ---
 
