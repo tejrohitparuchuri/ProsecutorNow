@@ -64,8 +64,6 @@ This specifically designed platform functions as a critical resource, offering a
 
 ---
 
-<div align="center">
-    Built with ❤️ and dedication to accessible justice.
-    <br/>
-    &copy; 2026 ProsecutorNow
-</div>
+
+<img src="https://drive.google.com/file/d/1sYhDA2Vr64JJb7whEICUi6yT3rwr-OLT/view?usp=sharing" alt="ptr">
+
