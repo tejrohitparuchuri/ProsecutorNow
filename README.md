@@ -60,7 +60,6 @@ This specifically designed platform functions as a critical resource, offering a
 
 ---
 
-> **Note**: To completely use the project, please download `runsql` from <a href="https://drive.google.com/file/d/1y3IY9xMsPhCElpiNhHkz0TBWPZmnwzvt/view" style="color: #8B0000; text-decoration: underline;">here</a>.
 
 ---
 
