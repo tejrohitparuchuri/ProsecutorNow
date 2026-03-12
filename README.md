@@ -60,9 +60,3 @@ This specifically designed platform functions as a critical resource, offering a
 
 ---
 
-
----
-
-
-<img src="[https://drive.google.com/file/d/1sYhDA2Vr64JJb7whEICUi6yT3rwr-OLT/view?usp=sharing](https://lh3.googleusercontent.com/a/ACg8ocIem9PdoNkrmaG9LDg_ecQNRkM9Cle2uzmgkDMN3oza7lNj7lguCw=s288-c-no)" alt="ptr">
-
